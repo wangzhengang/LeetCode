@@ -2955,6 +2955,122 @@ class Solution {
         }
         return result
     }
+    
+    ///67. 二进制求和
+    func addBinary(_ a: String, _ b: String) -> String {
+        var r = ""
+        let ac = Array(a)
+        let bc = Array(b)
+        var t = 0
+        var i = ac.count - 1
+        var j = bc.count - 1
+        if i >= j  {
+            while i >= 0 {
+                if j >= 0 {
+                    addBinaryJinWei(String(ac[i]), String(bc[j]), &t, &r)
+                    j -= 1
+                } else {
+                    addBinaryJinWei(String(ac[i]), "0", &t, &r)
+                }
+                i -= 1
+            }
+        } else {
+            while j >= 0 {
+                if i >= 0 {
+                    addBinaryJinWei(String(ac[i]), String(bc[j]), &t, &r)
+                    i -= 1
+                } else {
+                    addBinaryJinWei("0", String(bc[j]), &t, &r)
+                }
+                j -= 1
+            }
+        }
+        if t > 0 {
+            r.append("1")
+        }
+        var l = Array(r.reversed())
+        while let f = l.first, f == "0", l.count > 1 {
+            l.remove(at: 0)
+        }
+        return String(l)
+    }
+    func addBinaryJinWei(_ a: String, _ b: String, _ t: inout Int, _ r: inout String) {
+        let v = Int(String(a))! + Int(String(b))! + t
+        switch v {
+        case 0:
+            t = 0
+            r.append("0")
+        case 2:
+            t = 1
+            r.append("0")
+        case 1:
+            t = 0
+            r.append("1")
+        case 3:
+            t = 1
+            r.append("1")
+        default:
+            break
+        }
+    }
+    
+    ///剑指 Offer 33. 二叉搜索树的后序遍历序列
+    func verifyPostorder(_ postorder: [Int]) -> Bool {
+        if postorder.count <= 2 {
+            return true
+        }
+        var postorder = postorder
+        let last = postorder.removeLast()
+        var i = 0
+        while i < postorder.count && postorder[i] < last {
+            i += 1
+        }
+        var j = i
+        while j < postorder.count && postorder[j] > last {
+            j += 1
+        }
+        var left = true
+        if i >= 1 {
+            left = verifyPostorder(Array(postorder[0..<i-1]))
+        }
+        var right = true
+        if postorder.count >= i {
+            right = verifyPostorder(Array( postorder[i..<postorder.count]))
+        }
+        return ( j == postorder.count) && left && right
+    }
+    
+    ///剑指 Offer 34. 二叉树中和为某一值的路径
+    var rrrr = [[Int]]()
+    var temp = [Int]()
+    func pathSum(_ root: TreeNode?, _ sum: Int) -> [[Int]] {
+        pathSumWithDiGui(root, sum)
+        return rrrr
+    }
+    func pathSumWithDiGui(_ root: TreeNode?, _ sum: Int) {
+        if root == nil {
+            return
+        }
+        temp.append(root!.val)
+        let s = sum - root!.val
+        if s == 0 && root?.left == nil && root?.right == nil {
+            rrrr.append(temp)
+        }
+        pathSumWithDiGui(root?.left, s)
+        pathSumWithDiGui(root?.right, s)
+        temp.removeLast()
+    }
+    
+    ///剑指 Offer 42. 连续子数组的最大和
+    func maxSubArray(_ nums: [Int]) -> Int {
+        var nums = nums, maxv = nums[0]
+        for i in 1..<nums.count {
+            nums[i] += max(nums[i - 1], 0)
+            maxv = max(maxv, nums[i])
+        }
+        return maxv
+    }
+    
 }
 
 // 1 2  2 1
@@ -2962,16 +3078,16 @@ class Solution {
 let s = Solution()
 
 let s1 = Solution()
-s1.addNodel(1)
+//s1.addNodel(1)
 //s1.addNodel(2)
 //s1.addNodel(3)
 //s1.addNodel(4)
 //s1.addNodel(1)
 
 let s2 = Solution()
-s2.addNodel(1)
-s2.addNodel(2)
-s2.addNodel(3)
+//s2.addNodel(1)
+//s2.addNodel(2)
+//s2.addNodel(3)
 s2.head?.next?.next?.next = s2.head
 //s2.addNodel(3)
 //s2.addNodel(4)
@@ -2986,7 +3102,7 @@ for i in 1...50000 {
 }
 
 let c = Date().milliStamp
-let r = s.validateStackSequences( [], [] )
+let r = s.maxSubArray( [-2,1,-3,4,-1,2,1,-5,4] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
