@@ -3062,7 +3062,7 @@ class Solution {
     }
     
     ///剑指 Offer 42. 连续子数组的最大和
-    func maxSubArray(_ nums: [Int]) -> Int {
+    func maxSubArrayII(_ nums: [Int]) -> Int {
         var nums = nums, maxv = nums[0]
         for i in 1..<nums.count {
             nums[i] += max(nums[i - 1], 0)
