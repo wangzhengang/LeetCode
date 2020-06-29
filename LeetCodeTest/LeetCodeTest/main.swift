@@ -3118,6 +3118,44 @@ class Solution {
         return best
     }
     
+    ///剑指 Offer 50. 第一个只出现一次的字符
+    func firstUniqChar(_ s: String) -> Character {
+        var map = [Character: Int]()
+        var i = 0
+        for c in s {
+            if let _ = map[c] {
+                map[c] = -1
+            } else {
+                map[c] = i
+            }
+            i += 1
+        }
+        var r = [Character: Int]()
+        r[" "] = s.count
+        for m in map {
+            if m.value >= 0 && m.value <= r.values.first! {
+                r.removeAll()
+                r[m.key] = m.value
+            }
+        }
+        return r.keys.first!
+    }
+    
+    ///剑指 Offer 49. 丑数
+    func nthUglyNumber(_ n: Int) -> Int {
+        var a = 0, b = 0, c = 0
+        var dp = Array(repeating: 1, count: n)
+        dp[0] = 1
+        for i in 1..<n {
+            let n2 = dp[a] * 2, n3 = dp[b] * 3, n5 = dp[c] * 5
+            dp[i] = min(min(n2, n3), n5)
+            if dp[i] == n2 { a += 1 }
+            if dp[i] == n3 { b += 1 }
+            if dp[i] == n5 { c += 1 }
+        }
+        return dp[n - 1]
+    }
+    
 }
 
 // 1 2  2 1
@@ -3142,14 +3180,14 @@ s2.head?.next?.next?.next = s2.head
 
 
 //s.deleteNode( ListNode(5) )  2147483648
-//var nums1 = 1
-//var nums2 = [[Int]]()
-//for i in 1...31 {
-//    nums1 *= 2
-//}
+var nums1 = ""
+var nums2 = [[Int]]()
+for i in 1...50000 {
+    nums1.append("\(i)")
+}
 
 let c = Date().milliStamp
-let r = s.threeSumClosest( [-1,2,1,-4], 1 )
+let r = s.nthUglyNumber( 10 )
 print(r)
 let m = Date().milliStamp - c
 print(m)
