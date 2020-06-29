@@ -3156,6 +3156,79 @@ class Solution {
         return dp[n - 1]
     }
     
+
+    
+    ///剑指 Offer 53 - I. 在排序数组中查找数字 I
+    func search(_ nums: [Int], _ target: Int) -> Int {
+        var nums = nums
+        var count = 0
+        var i = 0
+        var j = nums.count - 1
+        var m = (i + j) / 2
+        while i <= j {
+            if nums[m] == target {
+                count += 1
+                nums.remove(at: m)
+                j = ( j >= nums.count ? nums.count - 1 : j )
+            } else if nums[m] < target {
+                i = m + 1
+            } else if nums[m] > target {
+                j = m - 1
+            }
+            m = (i + j) / 2
+        }
+        return count
+    }
+    
+    ///剑指 Offer 53 - II. 0～n-1中缺失的数字
+    func missingNumber(_ nums: [Int]) -> Int {
+        var i = 0, j = nums.count - 1
+        while i <= j {
+            let m = (i + j) / 2
+            if i == nums[m] {
+                i = m + 1
+            } else {
+                j -= 1
+            }
+        }
+        return i
+    }
+    
+    ///剑指 Offer 54. 二叉搜索树的第k大节点
+    func kthLargest(_ root: TreeNode?, _ k: Int) -> Int {
+        var array = [Int]()
+        kthLargestWithDigui(root, &array, k)
+        return array.last!
+    }
+    func kthLargestWithDigui(_ root: TreeNode?, _ arr: inout [Int], _ k: Int) {
+        if root == nil || arr.count == k {
+            return
+        }
+        kthLargestWithDigui(root?.left, &arr, k)
+        kthLargestWithDigui(root?.right, &arr, k)
+        arr.append(root!.val)
+    }
+    
+    ///215. 数组中的第K个最大元素
+    func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
+        var nums = nums
+        var v = (Int.min, 0)
+        var i = 0
+        while i < k {
+            v = (Int.min, 0)
+            var j = 0
+            while j < nums.count {
+                if nums[j] > v.0 {
+                    v.0 = nums[j]
+                    v.1 = j
+                }
+                j += 1
+            }
+            nums.remove(at: v.1)
+            i += 1
+        }
+        return v.0
+    }
 }
 
 // 1 2  2 1
@@ -3180,14 +3253,14 @@ s2.head?.next?.next?.next = s2.head
 
 
 //s.deleteNode( ListNode(5) )  2147483648
-var nums1 = ""
+var nums1 = [Int]()
 var nums2 = [[Int]]()
 for i in 1...50000 {
-    nums1.append("\(i)")
+    nums1.append(i)
 }
 
 let c = Date().milliStamp
-let r = s.nthUglyNumber( 10 )
+let r = s.search( nums1, 50000 )
 print(r)
 let m = Date().milliStamp - c
 print(m)
