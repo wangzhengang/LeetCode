@@ -36,7 +36,7 @@ class Solution {
     var head: ListNode?
     var tail: ListNode?
     
-    
+    /*
     ///为链表添加一个节点
     func addNodel(_ value: Int) {
         let newNodel = ListNode(value)
@@ -3156,8 +3156,6 @@ class Solution {
         return dp[n - 1]
     }
     
-
-    
     ///剑指 Offer 53 - I. 在排序数组中查找数字 I
     func search(_ nums: [Int], _ target: Int) -> Int {
         var nums = nums
@@ -3181,7 +3179,7 @@ class Solution {
     }
     
     ///剑指 Offer 53 - II. 0～n-1中缺失的数字
-    func missingNumber(_ nums: [Int]) -> Int {
+    func missingNumber3(_ nums: [Int]) -> Int {
         var i = 0, j = nums.count - 1
         while i <= j {
             let m = (i + j) / 2
@@ -3210,7 +3208,7 @@ class Solution {
     }
     
     ///215. 数组中的第K个最大元素
-    func findKthLargest(_ nums: [Int], _ k: Int) -> Int {
+    func findKthLargest2(_ nums: [Int], _ k: Int) -> Int {
         var nums = nums
         var v = (Int.min, 0)
         var i = 0
@@ -3229,6 +3227,42 @@ class Solution {
         }
         return v.0
     }
+    
+    */
+    
+    ///剑指 Offer 55 - I. 二叉树的深度
+    func maxDepth(_ root: TreeNode?) -> Int {
+        if root == nil { return 0 }
+        return max(maxDepth(root?.left), maxDepth(root?.right)) + 1
+    }
+    
+    ///剑指 Offer 55 - II. 平衡二叉树
+    func isBalanced(_ root: TreeNode?) -> Bool {
+        if root == nil { return true }
+        return abs( maxDepth(root?.left) - maxDepth(root?.right)) <= 1 && isBalanced(root?.left) && isBalanced(root?.right)
+    }
+    
+    ///剑指 Offer 56 - II. 数组中数字出现的次数 II
+    func singleNumber(_ nums: [Int]) -> Int {
+        var map = [Int: Int]()
+//        var nums = nums
+        var i = 0
+        while i < nums.count {
+            let n = nums[i]
+            if let v = map[n] {
+                if v == 1 {
+                    map[n] = v + 1
+                } else {
+                    map.removeValue(forKey: n)
+                }
+            } else {
+                map[n] = 1
+            }
+            i += 1
+        }
+        return map.first!.key
+    }
+    
 }
 
 // 1 2  2 1
