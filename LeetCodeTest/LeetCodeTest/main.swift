@@ -36,7 +36,7 @@ class Solution {
     var head: ListNode?
     var tail: ListNode?
     
-    /*
+    
     ///为链表添加一个节点
     func addNodel(_ value: Int) {
         let newNodel = ListNode(value)
@@ -3228,7 +3228,7 @@ class Solution {
         return v.0
     }
     
-    */
+    
     
     ///剑指 Offer 55 - I. 二叉树的深度
     func maxDepth(_ root: TreeNode?) -> Int {
@@ -3243,7 +3243,7 @@ class Solution {
     }
     
     ///剑指 Offer 56 - II. 数组中数字出现的次数 II
-    func singleNumber(_ nums: [Int]) -> Int {
+    func singleNumber_II(_ nums: [Int]) -> Int {
         var map = [Int: Int]()
 //        var nums = nums
         var i = 0
@@ -3261,6 +3261,63 @@ class Solution {
             i += 1
         }
         return map.first!.key
+    }
+    
+    ///剑指 Offer 57. 和为s的两个数字
+    func twoSum_II(_ nums: [Int], _ target: Int) -> [Int] {
+        var i = 0, j = nums.count - 1
+        while i != j {
+            let s = nums[i] + nums[j]
+            if s == target {
+                return [nums[i], nums[j]]
+            } else if s < target {
+                i += 1
+            } else if s > target {
+                j -= 1
+            }
+        }
+        return []
+    }
+    
+    ///剑指 Offer 57 - II. 和为s的连续正数序列
+    func findContinuousSequence(_ target: Int) -> [[Int]] {
+        var r = [[Int]]()
+        var t = 2;// Int(ceil(Double(target)/2.0))
+        var i = 1
+        while i < t {
+            let sum = (i + t) * (t - i + 1) / 2
+            if sum == target {
+                var temp = [Int]()
+                for i in i...t {
+                    temp.append(i)
+                }
+                r.append(temp)
+                i += 1
+            } else if sum < target {
+                t += 1
+            } else {
+                i += 1
+            }
+        }
+        return r
+    }
+    
+    ///剑指 Offer 58 - I. 翻转单词顺序
+    func reverseWords_IV(_ s: String) -> String {
+        return s.split(separator: " ").reversed().joined(separator: " ")
+    }
+    
+    ///剑指 Offer 58 - II. 左旋转字符串
+    func reverseLeftWords(_ s: String, _ n: Int) -> String {
+        if n >= s.count || n <= 0{
+            return s
+        }
+        var s = s
+        let index = s.index(s.startIndex, offsetBy: n - 1)
+        let left = s[s.startIndex...index]
+        s.removeSubrange(s.startIndex...index)
+        s.append(contentsOf: left)
+        return s
     }
     
 }
@@ -3289,12 +3346,12 @@ s2.head?.next?.next?.next = s2.head
 //s.deleteNode( ListNode(5) )  2147483648
 var nums1 = [Int]()
 var nums2 = [[Int]]()
-for i in 1...50000 {
+for i in 1...100000 {
     nums1.append(i)
 }
 
 let c = Date().milliStamp
-let r = s.search( nums1, 50000 )
+let r = s.reverseLeftWords( "lrloseumgh", 0 )
 print(r)
 let m = Date().milliStamp - c
 print(m)
