@@ -3320,6 +3320,105 @@ class Solution {
         return s
     }
     
+    
+    ///378. 有序矩阵中第K小的元素
+    func kthSmallest(_ matrix: [[Int]], _ k: Int) -> Int {
+        var a = [Int]()
+        for array in matrix {
+            for n in array {
+                a.append(n)
+            }
+        }
+        return a.sorted()[k - 1]
+    }
+    
+    ///剑指 Offer 59 - I. 滑动窗口的最大值
+    func maxSlidingWindow(_ nums: [Int], _ k: Int) -> [Int] {
+        if (nums.isEmpty && k == 0) || k > nums.count {
+            return []
+        }
+        var r = [Int]()
+        var i = 0, j = 0, m = Int.min
+        while j <= nums.count {
+            if j < i + k {
+                m = max(m, nums[j])
+                j += 1
+            } else {
+                r.append(m)
+                if j == nums.count {
+                    break
+                }
+                m = Int.min
+                i += 1
+                j = i
+            }
+        }
+        return r
+    }
+    
+    ///剑指 Offer 60. n个骰子的点数
+    func twoSum60(_ n: Int) -> [Double] {
+        var dp = [Double](repeating: 1 / 6, count: 6)
+        guard n > 1 else { return dp }
+        //每一轮循环解决i个骰子的情况下出现的概率
+        for i in 2...n {
+            //i个骰子的点数概率数组长度为 i * 5 + 1
+            var tmp = [Double](repeating: 0, count: 5 * i + 1)
+            for j in 0..<dp.count {
+                for k in 0..<6 {
+                    //点数为j+k的情况有可能是点数为j时，再投掷一次产生的
+                    tmp[j + k] += dp[j] / 6
+                }
+            }
+            dp = tmp
+        }
+        return dp
+    }
+    
+    ///剑指 Offer 61. 扑克牌中的顺子
+    func isStraight(_ nums: [Int]) -> Bool {
+        let nums = nums.sorted()
+        var i = 0, count = 0
+        while i < nums.count - 1 {
+            if nums[i] == 0 {
+                count += 1
+            } else {
+                let s = nums[i + 1] - nums[i]
+                if s == 1 {
+                    
+                } else if s == 0 {
+                    return false
+                } else {
+                    count -= s - 1
+                    if count < 0 {
+                        return false
+                    }
+                }
+            }
+            i += 1
+        }
+        return true
+    }
+    
+    ///剑指 Offer 62. 圆圈中最后剩下的数字
+    func lastRemainingII(_ n: Int, _ m: Int) -> Int {
+        var f = 0
+        for i in 2...n {
+            f = (f + m) % i
+        }
+        return f
+    }
+    
+    ///剑指 Offer 63. 股票的最大利润
+    func maxProfit(_ prices: [Int]) -> Int {
+        var c = Int.max, p = 0
+        for n in prices {
+            c = min(c, n)
+            p = max(p, n - c)
+        }
+        return p
+    }
+    
 }
 
 // 1 2  2 1
@@ -3351,8 +3450,8 @@ for i in 1...100000 {
 }
 
 let c = Date().milliStamp
-let r = s.reverseLeftWords( "lrloseumgh", 0 )
-print(r)
+//let r = s.lastRemaining( 10, 17 )
+//print(r)
 let m = Date().milliStamp - c
 print(m)
 

@@ -82,3 +82,39 @@ class CQueue {
     }
     
 }
+
+/**
+ *  剑指 Offer 59 - II. 队列的最大值
+ */
+class MaxQueue {
+    
+    var q = [Int]() //主队列
+    var v = [Int]() //最大值序列
+
+    init() {
+
+    }
+    
+    func max_value() -> Int {
+        return v.isEmpty ? -1 : v.first!
+    }
+    
+    func push_back(_ value: Int) {
+        while !v.isEmpty && v.last! < value {
+            v.removeLast()
+        }
+        v.append(value)
+        q.append(value)
+    }
+    
+    func pop_front() -> Int {
+        if v.isEmpty {
+            return -1
+        }
+        let ans = q.removeFirst()
+        if ans == v.first! {
+            v.removeFirst()
+        }
+        return ans
+    }
+}
