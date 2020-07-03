@@ -3419,6 +3419,81 @@ class Solution {
         return p
     }
     
+    
+    ///剑指 Offer 66. 构建乘积数组
+    func constructArr(_ a: [Int]) -> [Int] {
+        if a.isEmpty {
+            return a
+        }
+        var p = 1
+        var i = 0
+        var r = [p]
+        //下三角
+        while i < a.count - 1 {
+            p *= a[i]
+            r.append(p)
+            i += 1
+        }
+        //上三角
+        p = 1
+        i = a.count - 1
+        while i > 0 {
+            p *= a[i]
+            r[i - 1] *= p
+            i -= 1
+        }
+        return r
+    }
+    
+    ///剑指 Offer 65. 不用加减乘除做加法
+    func add(_ a: Int, _ b: Int) -> Int {
+        var a = a, b = b
+        while(b != 0) { // 当进位为 0 时跳出
+            let c = (a & b) << 1;  // c = 进位
+            a ^= b; // a = 非进位和
+            b = c; // b = 进位
+        }
+        return a;
+    }
+    
+    ///剑指 Offer 67. 把字符串转换成整数
+    func strToInt(_ str: String) -> Int {
+        let c = Array(str.trimmingCharacters(in: [" "]))
+        if(c.count == 0) { return 0 }
+        var res = 0, bndry = Int.max / 10
+        var i = 1, sign = 1
+        if(c[0] == "-") { sign = -1 }
+        else if(c[0] != "+") { i = 0 }
+        for j in i..<c.count {
+            if(c[j] < "0" || c[j] > "9" ) { break }
+            if(res > bndry || res == bndry && c[j] > "7") { return sign == 1 ? Int(Int32.max) : Int(Int32.min) }
+            res = res * 10 + Int((c[j].asciiValue! - Character("0").asciiValue!))
+        }
+        let r = sign * res
+        if r > Int(Int32.max) {
+            return Int(Int32.max)
+        }
+        if r < Int(Int32.min) {
+            return Int(Int32.min)
+        }
+        return r
+    }
+    
+    ///108. 将有序数组转换为二叉搜索树
+    func sortedArrayToBST(_ nums: [Int]) -> TreeNode? {
+        return sortedArrayToBSTWithDigui(nums, 0, nums.count - 1)
+    }
+    func sortedArrayToBSTWithDigui(_ nums: [Int], _ left: Int, _ right: Int) -> TreeNode? {
+        if left > right {
+            return nil
+        }
+        let mid = (left + right) / 2
+        let root = TreeNode(nums[mid])
+        root.left = sortedArrayToBSTWithDigui(nums, left, mid - 1)
+        root.right = sortedArrayToBSTWithDigui(nums, mid + 1, right)
+        return root
+    }
+    
 }
 
 // 1 2  2 1
@@ -3450,7 +3525,7 @@ for i in 1...100000 {
 }
 
 let c = Date().milliStamp
-//let r = s.lastRemaining( 10, 17 )
+//let r = s.strToInt( "20000000000000000000" )
 //print(r)
 let m = Date().milliStamp - c
 print(m)
