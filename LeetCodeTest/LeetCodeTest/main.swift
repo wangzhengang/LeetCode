@@ -3494,6 +3494,64 @@ class Solution {
         return root
     }
     
+    ///面试题 01.03. URL化
+    func replaceSpaces(_ S: String, _ length: Int) -> String {
+        if S.isEmpty || length <= 0 || length > S.count {
+            return ""
+        }
+        var i = 0
+        var s = Array(S)
+        while i < length {
+            if s[i] == " " {
+                s[i] = Character("%20")
+            }
+            i += 1
+        }
+        return String(s[0..<length])
+    }
+    
+    ///面试题 01.04. 回文排列
+    func canPermutePalindrome(_ s: String) -> Bool {
+        var map = [Character: Int]()
+        for c in s {
+            map[c] = (map[c] ?? 0) + 1
+        }
+        var count = 0
+        for m in map {
+            if m.value % 2 == 1 {
+                count += 1
+                if count > 1 {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
+    ///面试题 01.06. 字符串压缩
+    func compressString(_ S: String) -> String {
+        
+        var last = Character(" ")
+        var result = ""
+        var count = 0
+        for c in S {
+            if c == last {
+                count += 1
+            } else {
+                let t = count > 0 ? "\(count)\(c)" : "\(c)"
+                result.append(t)
+                count = 1
+                last = c
+            }
+        }
+        let t = count > 0 ? "\(count)" : ""
+        result.append(t)
+        if result.count >= S.count {
+            return S
+        }
+        return result
+    }
+    
 }
 
 // 1 2  2 1
@@ -3525,8 +3583,8 @@ for i in 1...100000 {
 }
 
 let c = Date().milliStamp
-//let r = s.strToInt( "20000000000000000000" )
-//print(r)
+let r = s.compressString("abbccdeeeffffeef")
+print(r)
 let m = Date().milliStamp - c
 print(m)
 
