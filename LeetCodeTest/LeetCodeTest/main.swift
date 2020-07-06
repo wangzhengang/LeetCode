@@ -3552,6 +3552,55 @@ class Solution {
         return result
     }
     
+    
+    ///面试题 01.07. 旋转矩阵
+    func rotate(_ matrix: inout [[Int]]) {
+        var result = [[Int]]()
+        var i = 0, j = matrix.count - 1
+        while i < matrix.count  {
+            var row = [Int]()
+            while j >= 0 {
+                row.append(matrix[j][i])
+                j -= 1
+            }
+            result.append(row)
+            i += 1
+        }
+        matrix = result
+    }
+    
+    ///面试题 01.08. 零矩阵
+    func setZeroes(_ matrix: inout [[Int]]) {
+        var row = Set<Int>(), clm = Set<Int>()
+        var i = 0
+        while i < matrix.count {
+            var j = 0
+            while j < matrix[i].count {
+                if matrix[i][j] == 0 {
+                    row.insert(i)
+                    clm.insert(j)
+                    break
+                }
+                j += 1
+            }
+            i += 1
+        }
+        for r in row {
+            matrix[r] = Array(repeating: 0, count: matrix[r].count)
+        }
+        
+        for c in clm {
+            for r in 0..<matrix.count {
+                matrix[r][c] = 0
+            }
+        }
+    }
+    
+    ///面试题 01.09. 字符串轮转
+    func isFlipedString(_ s1: String, _ s2: String) -> Bool {
+        return s1.count == s2.count && ((s1.isEmpty && s2.isEmpty) || "\(s1)\(s1)".contains(s2))
+    }
+    
 }
 
 // 1 2  2 1
@@ -3581,10 +3630,10 @@ var nums2 = [[Int]]()
 for i in 1...100000 {
     nums1.append(i)
 }
-
+var canshu = [[1,1,1],[1,0,1],[1,1,1]]
 let c = Date().milliStamp
-let r = s.compressString("abbccdeeeffffeef")
-print(r)
+s.setZeroes( &canshu )
+print(canshu)
 let m = Date().milliStamp - c
 print(m)
 
