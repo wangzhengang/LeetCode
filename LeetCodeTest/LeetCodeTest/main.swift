@@ -36,7 +36,7 @@ class Solution {
     var head: ListNode?
     var tail: ListNode?
     
-    
+    /*
     ///为链表添加一个节点
     func addNodel(_ value: Int) {
         let newNodel = ListNode(value)
@@ -3600,7 +3600,77 @@ class Solution {
     func isFlipedString(_ s1: String, _ s2: String) -> Bool {
         return s1.count == s2.count && ((s1.isEmpty && s2.isEmpty) || "\(s1)\(s1)".contains(s2))
     }
+    */
+    ///112. 路径总和
+    func hasPathSum(_ root: TreeNode?, _ sum: Int) -> Bool {
+        if root == nil {
+            return false
+        }
+        let q = Queue<TreeNode>()
+        q.enqueue(root)
+        let v = Queue<Int>()
+        v.enqueue(root!.val)
+        while !q.isEmpty() {
+            let top = q.dequeue()
+            let num = v.dequeue()!
+            if top?.left == nil && top?.right == nil {
+                if num == sum {
+                    return true
+                }
+                continue
+            }
+            if top?.left != nil{
+                q.enqueue(top?.left)
+                v.enqueue(num + top!.left!.val)
+            }
+            if top?.right != nil {
+                q.enqueue(top?.right)
+                v.enqueue(num + top!.right!.val)
+            }
+        }
+        return false
+    }
     
+    ///面试题 02.01. 移除重复节点
+    func removeDuplicateNodes(_ head: ListNode?) -> ListNode? {
+        if head == nil {
+            return nil
+        }
+        var s = Set<Int>()
+        var tail = head
+        s.insert(tail!.val)
+        while tail?.next != nil {
+            if let v = tail?.next?.val , s.contains(v) {
+                tail?.next = tail?.next?.next
+            } else {
+                tail = tail?.next
+            }
+        }
+        return head
+    }
+    
+    ///面试题 02.02. 返回倒数第 k 个节点
+    func kthToLast(_ head: ListNode?, _ k: Int) -> Int {
+        if head == nil || k < 0 {
+            return -1
+        }
+        var count = 0
+        var tail = head
+        while tail != nil {
+            tail = tail?.next
+            count += 1
+        }
+        if k > count {
+            return -1
+        }
+        tail = head
+        var i = 0
+        while i < count - k {
+            i += 1
+            tail = tail?.next
+        }
+        return tail!.val
+    }
 }
 
 // 1 2  2 1
@@ -3630,10 +3700,9 @@ var nums2 = [[Int]]()
 for i in 1...100000 {
     nums1.append(i)
 }
-var canshu = [[1,1,1],[1,0,1],[1,1,1]]
 let c = Date().milliStamp
-s.setZeroes( &canshu )
-print(canshu)
+//s.setZeroes( &canshu )
+//print(canshu)
 let m = Date().milliStamp - c
 print(m)
 
