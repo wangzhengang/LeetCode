@@ -36,7 +36,7 @@ class Solution {
     var head: ListNode?
     var tail: ListNode?
     
-    /*
+    
     ///为链表添加一个节点
     func addNodel(_ value: Int) {
         let newNodel = ListNode(value)
@@ -3600,7 +3600,7 @@ class Solution {
     func isFlipedString(_ s1: String, _ s2: String) -> Bool {
         return s1.count == s2.count && ((s1.isEmpty && s2.isEmpty) || "\(s1)\(s1)".contains(s2))
     }
-    */
+    
     ///112. 路径总和
     func hasPathSum(_ root: TreeNode?, _ sum: Int) -> Bool {
         if root == nil {
@@ -3671,6 +3671,79 @@ class Solution {
         }
         return tail!.val
     }
+    
+    
+    ///面试题 16.11. 跳水板
+    func divingBoard(_ shorter: Int, _ longer: Int, _ k: Int) -> [Int] {
+        guard k > 0 else {
+            return []
+        }
+        if k == 1 {
+            return ( shorter == longer ? [longer] : [shorter, longer] )
+        }
+        if shorter == longer {
+            return [shorter * k]
+        }
+        var result = Set<Int>()
+        result.insert(shorter * k)
+        for k1 in 1...k {
+            let sum = shorter * k1 + (k - k1) * longer
+            result.insert(sum)
+        }
+        result.insert(longer * k)
+        return result.sorted()
+    }
+    
+    ///面试题 02.05. 链表求和
+    func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+        if l1 == nil && l2 == nil {
+            return nil
+        }
+        if l1 == nil || l2 == nil {
+            return l1 ?? l2
+        }
+        var l1 = l1, l2 = l2
+        var jin = 0
+        let new = ListNode(-1)
+        var tail = new
+        while l1 != nil && l2 != nil {
+            let sum = l1!.val + l2!.val + jin
+            if sum < 10 {
+                jin = 0
+                tail.next = ListNode(sum)
+            } else {
+                jin = 1
+                let rem = sum % 10
+                tail.next = ListNode(rem)
+            }
+            tail = tail.next!
+            l1 = l1?.next
+            l2 = l2?.next
+        }
+        var l = l1 ?? l2
+        while l != nil {
+            let sum = l!.val + jin
+            if sum < 10 {
+                jin = 0
+                tail.next = ListNode(sum)
+                tail = tail.next!
+                tail.next = l?.next
+                break
+            } else {
+                jin = 1
+                let rem = sum % 10
+                tail.next = ListNode(rem)
+                tail = tail.next!
+            }
+            l = l?.next
+        }
+        if jin == 1 {
+            tail.next = ListNode(jin)
+        }
+        return new.next
+    }
+    
+    
 }
 
 // 1 2  2 1
@@ -3701,8 +3774,8 @@ for i in 1...100000 {
     nums1.append(i)
 }
 let c = Date().milliStamp
-//s.setZeroes( &canshu )
-//print(canshu)
+let r = s.divingBoard( 1, 2, 3 )
+print(r)
 let m = Date().milliStamp - c
 print(m)
 
