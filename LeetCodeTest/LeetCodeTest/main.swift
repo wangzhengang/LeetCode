@@ -199,7 +199,7 @@ class Solution {
     }
     
     ///是否回文链表
-    func isPalindrome(_ head: ListNode?) -> Bool {
+    func isPalindrome_1(_ head: ListNode?) -> Bool {
         
         if head == nil {
             return false
@@ -293,7 +293,7 @@ class Solution {
     }
     
     ///回文数
-    func isPalindrome(_ x: Int) -> Bool {
+    func isPalindrome_2(_ x: Int) -> Bool {
         
         if x < 0 {
             return false
@@ -2696,7 +2696,7 @@ class Solution {
     }
     
     ///125. 验证回文串
-    func isPalindrome(_ s: String) -> Bool {
+    func isPalindrome_3(_ s: String) -> Bool {
         let items = s.map { $0.lowercased() }.filter { ($0 >= "a" && $0 <= "z") || ($0 >= "0" && $0 <= "9") }
         for i in 0..<items.count/2 {
             if items[i] != items[items.count - i - 1] {
@@ -3695,7 +3695,7 @@ class Solution {
     }
     
     ///面试题 02.05. 链表求和
-    func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+    func addTwoNumbers_2(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
         if l1 == nil && l2 == nil {
             return nil
         }
@@ -3743,6 +3743,41 @@ class Solution {
         return new.next
     }
     
+    ///面试题 02.06. 回文链表
+    func isPalindrome(_ head: ListNode?) -> Bool {
+        var tail = head
+        var new: ListNode?
+        while tail != nil {
+            let n = ListNode(tail!.val)
+            n.next = new
+            new = n
+            tail = tail?.next
+        }
+        tail = head
+        while tail != nil, new != nil {
+            if tail!.val != new!.val {
+                return false
+            }
+            tail = tail?.next
+            new = new?.next
+        }
+        return true
+    }
+    
+    ///面试题 04.02. 最小高度树
+    func sortedArrayToBSTII(_ nums: [Int]) -> TreeNode? {
+        return sortedArrayToBSTWithDg(nums, 0, nums.count - 1)
+    }
+    func sortedArrayToBSTWithDg(_ nums: [Int], _ left: Int, _ right: Int) -> TreeNode? {
+        if left > right {
+            return nil
+        }
+        let mid = (left + right) / 2
+        let root = TreeNode(nums[mid])
+        root.left = sortedArrayToBSTWithDg(nums, left, mid - 1)
+        root.right = sortedArrayToBSTWithDg(nums, mid + 1, left)
+        return root
+    }
     
 }
 
@@ -3751,11 +3786,11 @@ class Solution {
 let s = Solution()
 
 let s1 = Solution()
-//s1.addNodel(1)
-//s1.addNodel(2)
-//s1.addNodel(3)
-//s1.addNodel(4)
-//s1.addNodel(1)
+s1.addNodel(1)
+s1.addNodel(1)
+s1.addNodel(2)
+s1.addNodel(1)
+//s1.addNodel(5)
 
 let s2 = Solution()
 //s2.addNodel(1)
@@ -3774,7 +3809,7 @@ for i in 1...100000 {
     nums1.append(i)
 }
 let c = Date().milliStamp
-let r = s.divingBoard( 1, 2, 3 )
+let r = s.isPalindrome( s1.head )
 print(r)
 let m = Date().milliStamp - c
 print(m)
