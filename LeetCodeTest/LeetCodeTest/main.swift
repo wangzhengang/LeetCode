@@ -3779,6 +3779,61 @@ class Solution {
         return root
     }
     
+    
+    ///309. 最佳买卖股票时机含冷冻期
+    func maxProfit(_ prices: [Int]) -> Int {
+        if prices.isEmpty {
+            return 0
+        }
+        let n = prices.count
+        var f = Array(repeating: Array(repeating: 0, count: 3), count: prices.count)
+        f[0][0] = -prices[0]
+        for i in 1..<n {
+            f[i][0] = max(f[i - 1][0], f[i - 1][2] - prices[i])
+            f[i][1] = f[i - 1][0] + prices[i]
+            f[i][2] = max(f[i - 1][1], f[i - 1][2])
+        }
+        return max(f[n - 1][1], f[n - 1][2])
+    }
+    
+    ///面试题 04.03. 特定深度节点链表
+    func listOfDepth(_ tree: TreeNode?) -> [ListNode?] {
+        if tree == nil {
+            return []
+        }
+        var result = [ListNode?]()
+        var list: ListNode?
+        var tail = list
+        let q = Queue<TreeNode>()
+        q.enqueue(tree)
+        var size = q.size
+        while !q.isEmpty() {
+            let last = q.dequeue()!
+            size -= 1
+            let new = ListNode(last.val)
+            if list == nil {
+                list = new
+                tail = list
+            } else {
+                tail?.next = new
+                tail = tail?.next
+            }
+            if let left = last.left {
+                q.enqueue(left)
+            }
+            if let right = last.right {
+                q.enqueue(right)
+            }
+            if size == 0 {
+                size = q.size
+                result.append(list!)
+                list = nil
+                tail = list
+            }
+        }
+        return result
+    }
+    
 }
 
 // 1 2  2 1
@@ -3786,10 +3841,10 @@ class Solution {
 let s = Solution()
 
 let s1 = Solution()
-s1.addNodel(1)
-s1.addNodel(1)
-s1.addNodel(2)
-s1.addNodel(1)
+//s1.addNodel(1)
+//s1.addNodel(1)
+//s1.addNodel(2)
+//s1.addNodel(1)
 //s1.addNodel(5)
 
 let s2 = Solution()
