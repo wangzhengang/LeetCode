@@ -36,7 +36,7 @@ class Solution {
     var head: ListNode?
     var tail: ListNode?
     
-    
+    /*
     ///为链表添加一个节点
     func addNodel(_ value: Int) {
         let newNodel = ListNode(value)
@@ -3832,6 +3832,45 @@ class Solution {
             }
         }
         return result
+    }
+    */
+    ///面试题 04.04. 检查平衡性
+    func isBalanced_height(_ root: TreeNode?) -> Int {
+        if root == nil {
+            return 0
+        }
+        let h = max(isBalanced_height(root?.left), isBalanced_height(root?.right)) + 1
+        print("\(h)")
+        return h
+    }
+    func isBalanced_II(_ root: TreeNode?) -> Bool {
+        if root == nil {
+            return true
+        }
+        return abs(isBalanced_height(root?.left) - isBalanced_height(root?.right)) <= 1 && isBalanced_II(root?.left) && isBalanced_II(root?.right)
+    }
+    
+    ///面试题 04.05. 合法二叉搜索树
+    func isValidBST(_ root: TreeNode?) -> Bool {
+        if root == nil{
+            return true
+        }
+        var xulie = [Int]()
+        isValidBST_midorder(root, &xulie)
+        for i in 0..<xulie.count - 1 {
+            if xulie[i] >= xulie[i + 1] {
+                return false
+            }
+        }
+        return true
+    }
+    func isValidBST_midorder(_ root: TreeNode?, _ xulie: inout [Int]) {
+        if root == nil {
+            return
+        }
+        isValidBST_midorder(root?.left, &xulie)
+        xulie.append(root!.val)
+        isValidBST_midorder(root?.right, &xulie)
     }
     
 }
