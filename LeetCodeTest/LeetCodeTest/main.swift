@@ -36,7 +36,7 @@ class Solution {
     var head: ListNode?
     var tail: ListNode?
     
-    /*
+    
     ///为链表添加一个节点
     func addNodel(_ value: Int) {
         let newNodel = ListNode(value)
@@ -3781,7 +3781,7 @@ class Solution {
     
     
     ///309. 最佳买卖股票时机含冷冻期
-    func maxProfit(_ prices: [Int]) -> Int {
+    func maxProfit_II(_ prices: [Int]) -> Int {
         if prices.isEmpty {
             return 0
         }
@@ -3833,7 +3833,7 @@ class Solution {
         }
         return result
     }
-    */
+    
     ///面试题 04.04. 检查平衡性
     func isBalanced_height(_ root: TreeNode?) -> Int {
         if root == nil {
@@ -3873,6 +3873,46 @@ class Solution {
         isValidBST_midorder(root?.right, &xulie)
     }
     
+    ///350. 两个数组的交集 II
+    func intersect(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+        if nums1.isEmpty || nums2.isEmpty {
+            return []
+        }
+        var map = [Int: Int]()
+        for n in nums1 {
+            if let v = map[n] {
+                map[n] = v + 1
+            } else {
+                map[n] = 1
+            }
+        }
+        var result = [Int]()
+        for n in nums2 {
+            if let v = map[n], v > 0 {
+                map[n] = v - 1
+                result.append(n)
+            }
+        }
+        return result
+    }
+    
+    ///面试题 04.10. 检查子树
+    func checkSubTree(_ t1: TreeNode?, _ t2: TreeNode?) -> Bool {
+        if t1 == nil {
+            return t2 == nil
+        }
+        return checkSubTree_isSame(t1, t2) || checkSubTree(t1?.left, t2) || checkSubTree(t1?.right, t2)
+    }
+    func checkSubTree_isSame(_ t1: TreeNode?, _ t2: TreeNode?) -> Bool {
+        if t1 == nil && t2 == nil {
+            return true
+        }
+        if t1 == nil || t2 == nil {
+            return false
+        }
+        return t1?.val == t2?.val && checkSubTree_isSame(t1?.left, t2?.left) && checkSubTree_isSame(t1?.right, t2?.right)
+    }
+    
 }
 
 // 1 2  2 1
@@ -3903,7 +3943,7 @@ for i in 1...100000 {
     nums1.append(i)
 }
 let c = Date().milliStamp
-let r = s.isPalindrome( s1.head )
+let r = s.intersect( [], [] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
