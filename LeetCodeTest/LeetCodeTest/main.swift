@@ -36,7 +36,6 @@ class Solution {
     var head: ListNode?
     var tail: ListNode?
     
-    
     ///为链表添加一个节点
     func addNodel(_ value: Int) {
         let newNodel = ListNode(value)
@@ -3913,6 +3912,25 @@ class Solution {
         return t1?.val == t2?.val && checkSubTree_isSame(t1?.left, t2?.left) && checkSubTree_isSame(t1?.right, t2?.right)
     }
     
+    ///120. 三角形最小路径和
+    func minimumTotal(_ triangle: [[Int]]) -> Int {
+        let n = triangle.count
+        var f = Array(repeating: Array(repeating: 0, count: n), count: n)
+        f[0][0] = triangle[0][0]
+        for i in 1..<n {
+            f[i][0] = f[i - 1][0] + triangle[i][0]
+            for j in 1..<i {
+                f[i][j] = min(f[i - 1][j - 1], f[i - 1][j]) + triangle[i][j]
+            }
+            f[i][i] = f[i - 1][i - 1] + triangle[i][i]
+        }
+        var minTotal = f[n - 1][0]
+        for i in 1..<n {
+            minTotal = min(minTotal, f[n - 1][i]);
+        }
+        return minTotal
+    }
+    
 }
 
 // 1 2  2 1
@@ -3943,7 +3961,7 @@ for i in 1...100000 {
     nums1.append(i)
 }
 let c = Date().milliStamp
-let r = s.intersect( [], [] )
+let r = s.minimumTotal( [[2],[3,3],[2,5,1],[4,1,8,1]] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
