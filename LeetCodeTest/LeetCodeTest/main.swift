@@ -3930,6 +3930,36 @@ class Solution {
         }
         return minTotal
     }
+ 
+    ///96. 不同的二叉搜索树
+    func numTrees_II(_ n: Int) -> Int {
+        var C = 1
+        for i in 0..<n {
+            C = C * 2 * (2 * i + 1) / (i + 2);
+        }
+        return C
+    }
+    
+    ///414. 第三大的数
+    func thirdMax(_ nums: [Int]) -> Int {
+        var set = Set(nums)
+        if set.count == 1 {
+            return set.first!
+        }
+        if set.count == 2 {
+            let array = Array(set)
+            return max(array[0], array[1])
+        }
+        var maxv = Int.min
+        for _ in 1...3 {
+            maxv = Int.min
+            for n in set {
+                maxv = max(n, maxv)
+            }
+            set.remove(maxv)
+        }
+        return maxv
+    }
     
 }
 
@@ -3960,8 +3990,9 @@ var nums2 = [[Int]]()
 for i in 1...100000 {
     nums1.append(i)
 }
+ 
 let c = Date().milliStamp
-let r = s.minimumTotal( [[2],[3,3],[2,5,1],[4,1,8,1]] )
+let r = s.thirdMax( [1,1,2] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
