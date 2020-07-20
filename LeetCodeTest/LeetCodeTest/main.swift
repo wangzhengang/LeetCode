@@ -3961,6 +3961,47 @@ class Solution {
         return maxv
     }
     
+    ///35. 搜索插入位置
+    func searchInsert_II(_ nums: [Int], _ target: Int) -> Int {        
+        for i in 0..<nums.count {
+            if target == nums[i] {
+                return i
+            } else if target < nums[i] {
+                return i
+            }
+        }
+        return nums.count
+    }
+    
+    ///167. 两数之和 II - 输入有序数组
+    func twoSum_III(_ numbers: [Int], _ target: Int) -> [Int] {
+        if numbers.isEmpty {
+            return []
+        }
+        var map = [Int:[Int]]()
+        for i in 0..<numbers.count {
+            let n = numbers[i]
+            if var v = map[n] {
+                v.append(i)
+                map[n] = v
+            } else {
+                map[n] = [i]
+            }
+        }
+        for i in 0..<numbers.count {
+            let n = numbers[i]
+            let k = target - n
+            if let indexs = map[k] {
+                for v in indexs {
+                    if v != i {
+                        return [min(v, i) + 1, max(v, i) + 1]
+                    }
+                }
+            }
+        }
+        return []
+    }
+    
 }
 
 // 1 2  2 1
@@ -3992,7 +4033,7 @@ for i in 1...100000 {
 }
  
 let c = Date().milliStamp
-let r = s.thirdMax( [1,1,2] )
+let r = s.twoSum_III( [5, 25, 75], 100 )
 print(r)
 let m = Date().milliStamp - c
 print(m)
