@@ -4002,6 +4002,61 @@ class Solution {
         return []
     }
     
+    
+    ///动态规划--斐波那契
+    func feiBoNaQi(_ num: Int) -> Int {
+        if num <= 0 {
+            return 0
+        }
+        //备忘录
+        var map = [Int: Int]()
+        return feiBoNaQi_help(&map, num)
+    }
+    func feiBoNaQi_help(_ map: inout [Int: Int], _ num: Int) -> Int {
+        if num == 1 || num == 2 {
+            return 1
+        }
+        if let v = map[num] {
+            return v
+        } else {
+            map[num] = feiBoNaQi_help(&map, num - 1) + feiBoNaQi_help(&map, num - 2)
+        }
+        return map[num]!
+    }
+    
+    func xieBianli(_ n: Int) {
+        // 斜着遍历数组
+        for l in 2...n {
+            for i in 0...n-l {
+                let j = l + i - 1
+                print("[\(i),\(j)]")
+            }
+        }
+    }
+    
+    ///64. 最小路径和
+    func minPathSum(_ grid: [[Int]]) -> Int {
+        var grid = grid
+        for i in 0..<grid.count {
+            for j in 0..<grid[0].count {
+                if i == 0 && j == 0 {
+                    continue
+                }
+                if i == 0 {
+                    grid[i][j] = grid[i][j - 1] + grid[i][j]
+                }
+                if j == 0 {
+                    grid[i][j] = grid[i - 1][j] + grid[i][j]
+                }
+                if i != 0 && j != 0 {
+                    grid[i][j] = min(grid[i - 1][j], grid[i][j - 1]) + grid[i][j]
+                }
+            }
+        }
+        return grid[grid.count - 1][grid[0].count - 1]
+    }
+    
+    
 }
 
 // 1 2  2 1
@@ -4026,14 +4081,14 @@ s2.head?.next?.next?.next = s2.head
 
 
 //s.deleteNode( ListNode(5) )  2147483648
-var nums1 = [Int]()
-var nums2 = [[Int]]()
-for i in 1...100000 {
-    nums1.append(i)
-}
+//var nums1 = [Int]()
+//var nums2 = [[Int]]()
+//for i in 1...100000 {
+//    nums1.append(i)
+//}
  
 let c = Date().milliStamp
-let r = s.twoSum_III( [5, 25, 75], 100 )
+let r = s.minPathSum( [[1,3,1],[1,5,1],[4,2,1]] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
