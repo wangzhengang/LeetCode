@@ -4056,6 +4056,21 @@ class Solution {
         return grid[grid.count - 1][grid[0].count - 1]
     }
     
+    ///1025. 除数博弈
+    func divisorGame(_ N: Int) -> Bool {
+        var N = N, ilis = 0, bobe = 0, x = 1
+        while 0 < x && x < N && N % x == 0 {
+            if ilis == 0 {
+                ilis = x
+                bobe = 0
+            } else if bobe == 0 {
+                bobe = x
+                ilis = 0
+            }
+            N -= x
+        }
+        return (ilis != 0)
+    }
     
 }
 
@@ -4088,7 +4103,7 @@ s2.head?.next?.next?.next = s2.head
 //}
  
 let c = Date().milliStamp
-let r = s.minPathSum( [[1,3,1],[1,5,1],[4,2,1]] )
+let r = s.divisorGame( 3 )
 print(r)
 let m = Date().milliStamp - c
 print(m)
