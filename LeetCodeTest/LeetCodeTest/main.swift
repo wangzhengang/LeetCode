@@ -4072,6 +4072,96 @@ class Solution {
         return (ilis != 0)
     }
     
+    
+    ///全排列
+    var result = [[Int]]()
+    func quanpailie(_ nums: [Int]) -> [[Int]] {
+        var list = [Int]()
+        var set = Set<Int>()
+        quanpailie_digui(nums, &list, &set)
+        return result
+    }
+    func quanpailie_digui(_ nums: [Int], _ list: inout [Int], _ set: inout Set<Int>) {
+        if list.count == nums.count {
+            result.append(list)
+            return
+        }
+        for n in nums {
+            if set.contains(n) {
+                continue
+            }
+            set.insert(n)
+            list.append(n)
+            quanpailie_digui(nums, &list, &set)
+            list.removeLast()
+            set.remove(n)
+        }
+    }
+    
+    ///二分查找法
+    func erfenchazhao(_ nums: [Int], _ target: Int ) -> Int {
+        var left = 0, right = nums.count - 1
+        while left <= right {
+            let mid = left + (right - left) / 2
+            if nums[mid] == target {
+                right = mid - 1
+            } else if nums[mid] < target {
+                left = mid + 1
+            } else if nums[mid] > target {
+                right = mid - 1
+            }
+        }
+        if left >= nums.count || nums[left] != target {
+            return -1
+        }
+        return left
+    }
+ 
+    ///392. 判断子序列
+    func isSubsequence(_ s: String, _ t: String) -> Bool {
+        let sArray = Array(s), tArray = Array(t)
+        var i = 0, j = 0, count = s.count
+        while i < sArray.count {
+            let cs = sArray[i]
+            while j < tArray.count {
+                let ts = tArray[j]
+                j += 1
+                if cs == ts {
+                    count -= 1
+                    break
+                }
+            }
+            i += 1
+        }
+        return (count == 0)
+    }
+    
+    ///104. 二叉树的最大深度
+    func maxDepth__7(_ root: TreeNode?) -> Int {
+        if root == nil {
+            return 0
+        }
+        var depth = 0
+        var q = Array<TreeNode>()
+        q.append(root!)
+        var size = q.count
+        while !q.isEmpty {
+            let f = q.removeFirst()
+            size -= 1
+            if let left = f.left {
+                q.append(left)
+            }
+            if let right = f.right {
+                q.append(right)
+            }
+            if size == 0 {
+                size = q.count
+                depth += 1
+            }
+        }
+        return depth
+    }
+    
 }
 
 // 1 2  2 1
@@ -4103,7 +4193,7 @@ s2.head?.next?.next?.next = s2.head
 //}
  
 let c = Date().milliStamp
-let r = s.divisorGame( 3 )
+let r = s.isSubsequence( "aaaa", "bbaa" )
 print(r)
 let m = Date().milliStamp - c
 print(m)
