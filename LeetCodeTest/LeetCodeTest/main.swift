@@ -4162,6 +4162,26 @@ class Solution {
         return depth
     }
     
+    
+    ///114. 二叉树展开为链表
+    func flatten(_ root: TreeNode?) {
+        var cur = root
+        while cur != nil {
+            if cur?.left != nil {
+                let next = cur?.left
+                var pre  = next
+                while pre?.right != nil {
+                    pre = pre?.right
+                }
+                pre?.right = cur?.right
+                cur?.left = nil
+                cur?.right = next
+            }
+            cur = cur?.right
+        }
+    }
+    
+    
 }
 
 // 1 2  2 1
@@ -4193,8 +4213,8 @@ s2.head?.next?.next?.next = s2.head
 //}
  
 let c = Date().milliStamp
-let r = s.isSubsequence( "aaaa", "bbaa" )
-print(r)
+//let r = s.sumTarget( [2,2,2,3,4,5], 4 )
+//print(r)
 let m = Date().milliStamp - c
 print(m)
 
