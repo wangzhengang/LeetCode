@@ -4181,6 +4181,23 @@ class Solution {
         }
     }
     
+    ///100. 相同的树
+    func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
+        if p == nil && q == nil {
+            return true
+        }
+        if p == nil || q == nil {
+            return false
+        }
+        return p!.val == q!.val && isSameTree(p?.left, q?.left) && isSameTree(p?.right, q?.right)
+    }
+    
+    ///628. 三个数的最大乘积
+    func maximumProduct(_ nums: [Int]) -> Int {
+        let nums = nums.sorted()
+        let oppo = max(nums[nums.count - 1] * nums[nums.count - 2] * nums[nums.count - 3], nums[nums.count - 1] * nums[0] * nums[1])
+        return oppo > Int(Int32.max) ? Int(Int32.max) : oppo
+    }
     
 }
 
@@ -4206,15 +4223,15 @@ s2.head?.next?.next?.next = s2.head
 
 
 //s.deleteNode( ListNode(5) )  2147483648
-//var nums1 = [Int]()
+var nums1 = [Int]()
 //var nums2 = [[Int]]()
-//for i in 1...100000 {
-//    nums1.append(i)
-//}
+for i in 1...10000 {
+    nums1.append(i)
+}
  
 let c = Date().milliStamp
-//let r = s.sumTarget( [2,2,2,3,4,5], 4 )
-//print(r)
+let r = s.maximumProduct( nums1 )
+print(r)
 let m = Date().milliStamp - c
 print(m)
 
