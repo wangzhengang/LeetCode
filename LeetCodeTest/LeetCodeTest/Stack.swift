@@ -30,7 +30,7 @@ class Stack<T> {
     }
     
     func top() -> T? {
-        return array[size-1]
+        return (size <= 0 ? nil : array[size-1])
     }
     
     func clear() {

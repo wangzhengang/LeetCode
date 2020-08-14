@@ -4199,6 +4199,20 @@ class Solution {
         return oppo > Int(Int32.max) ? Int(Int32.max) : oppo
     }
     
+    
+    ///20. 有效的括号
+    func isValid_guohao(_ s: String) -> Bool {
+        let map : [Character: Character] = [")":"(", "}":"{", "]":"["]
+        let stack = Stack<Character>()
+        for c in s {
+            if let top = stack.top(), top == map[c] {
+                stack.pop()
+            } else {
+                stack.push(c)
+            }
+        }
+        return stack.isEmpty()
+    }
 }
 
 // 1 2  2 1
@@ -4230,7 +4244,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.maximumProduct( nums1 )
+let r = s.isValid_guohao( "" )
 print(r)
 let m = Date().milliStamp - c
 print(m)
