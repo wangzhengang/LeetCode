@@ -4072,7 +4072,6 @@ class Solution {
         return (ilis != 0)
     }
     
-    
     ///全排列
     var result = [[Int]]()
     func quanpailie(_ nums: [Int]) -> [[Int]] {
@@ -4162,7 +4161,6 @@ class Solution {
         return depth
     }
     
-    
     ///114. 二叉树展开为链表
     func flatten(_ root: TreeNode?) {
         var cur = root
@@ -4199,7 +4197,6 @@ class Solution {
         return oppo > Int(Int32.max) ? Int(Int32.max) : oppo
     }
     
-    
     ///20. 有效的括号
     func isValid_guohao(_ s: String) -> Bool {
         let map : [Character: Character] = [")":"(", "}":"{", "]":"["]
@@ -4213,6 +4210,24 @@ class Solution {
         }
         return stack.isEmpty()
     }
+    
+    ///110. 平衡二叉树
+    func isBalanced__2(_ root: TreeNode?) -> Bool {
+        if root == nil {
+            return true
+        }
+        return abs( Int32(maxDepth(root?.left)) - Int32(maxDepth(root?.right)) ) <= 1 && isBalanced(root?.left) && isBalanced(root?.right)
+    }
+    
+    ///326. 3的幂
+    func isPowerOfThree(_ n: Int) -> Bool {
+        var n = Double( n )
+        while n >= 3 {
+            n /= 3
+        }
+        return (n == 1)
+    }
+    
 }
 
 // 1 2  2 1
@@ -4244,7 +4259,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.isValid_guohao( "" )
+let r = s.isPowerOfThree( 12 )
 print(r)
 let m = Date().milliStamp - c
 print(m)
