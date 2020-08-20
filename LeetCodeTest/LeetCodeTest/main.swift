@@ -4228,6 +4228,28 @@ class Solution {
         return (n == 1)
     }
     
+    ///109. 有序链表转换二叉搜索树
+    func sortedListToBST(_ head: ListNode?) -> TreeNode? {
+        var nums = [Int]()
+        var h = head
+        while h != nil {
+            nums.append(h!.val)
+            h = head?.next
+        }
+        return sortedListToBST_digui(nums, 0, nums.count - 1)
+    }
+    func sortedListToBST_digui(_ nums: [Int], _ left: Int, _ right: Int) -> TreeNode? {
+        if left > right {
+            return nil
+        }
+        let mid = ( right + left ) / 2
+        print("\(left),\(mid),\(right)")
+        let root = TreeNode(nums[mid])
+        root.left = sortedListToBST_digui(nums, 0, mid - 1)
+        root.right = sortedListToBST_digui(nums, mid + 1, right)
+        return root
+    }
+    
 }
 
 // 1 2  2 1
@@ -4259,7 +4281,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.isPowerOfThree( 12 )
+let r = s.sortedListToBST( nil )
 print(r)
 let m = Date().milliStamp - c
 print(m)
