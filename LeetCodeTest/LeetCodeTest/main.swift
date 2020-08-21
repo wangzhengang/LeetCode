@@ -4250,6 +4250,35 @@ class Solution {
         return root
     }
     
+    ///111. 二叉树的最小深度
+    func minDepth(_ root: TreeNode?) -> Int {
+        if root == nil {
+            return 0
+        }
+        var depth = 1
+        let q = Queue<TreeNode>()
+        q.enqueue(root)
+        var size = q.size
+        while !q.isEmpty() {
+            let l = q.dequeue()
+            size -= 1
+            if let left = l?.left {
+                q.enqueue(left)
+            }
+            if let right = l?.right {
+                q.enqueue(right)
+            }
+            if l?.left == nil && l?.right == nil {
+                break
+            }
+            if size == 0 {
+                size = q.size
+                depth += 1
+            }
+        }
+        return depth
+    }
+    
 }
 
 // 1 2  2 1
@@ -4281,7 +4310,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.sortedListToBST( nil )
+let r = s.minDepth( nil )
 print(r)
 let m = Date().milliStamp - c
 print(m)
