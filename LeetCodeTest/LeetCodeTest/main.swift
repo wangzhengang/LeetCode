@@ -4279,6 +4279,22 @@ class Solution {
         return depth
     }
     
+    ///1550. 存在连续三个奇数的数组
+    func threeConsecutiveOdds(_ arr: [Int]) -> Bool {
+        var count = 0
+        for n in arr {
+            if count == 3 {
+                return true
+            }
+            if n % 2 == 1 {
+                count += 1
+            } else {
+                count = 0
+            }
+        }
+        return (count == 3)
+    }
+    
 }
 
 // 1 2  2 1
@@ -4310,7 +4326,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.minDepth( nil )
+let r = s.threeConsecutiveOdds( [] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
