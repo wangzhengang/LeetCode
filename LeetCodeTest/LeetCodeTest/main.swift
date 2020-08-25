@@ -4295,6 +4295,29 @@ class Solution {
         return (count == 3)
     }
     
+    ///687. 最长同值路径
+    func longestUnivaluePath(_ root: TreeNode?) -> Int {
+    var ans = 0
+        longestUnivaluePath_arrow(root, &ans)
+        return ans
+    }
+    @discardableResult
+    func longestUnivaluePath_arrow(_ root: TreeNode?, _ ans: inout Int) -> Int {
+        if root == nil {
+            return 0
+        }
+        let left  = longestUnivaluePath_arrow(root?.left, &ans)
+        let right = longestUnivaluePath_arrow(root?.right, &ans)
+        var arrowLeft = 0, arrowRight = 0
+        if root!.left != nil && root!.left!.val == root!.val  {
+            arrowLeft += left + 1
+        }
+        if root!.right != nil && root!.right!.val == root!.val {
+            arrowRight += right + 1
+        }
+        ans = max(ans, arrowLeft + arrowRight)
+        return max(arrowLeft, arrowRight)
+    }
 }
 
 // 1 2  2 1
@@ -4326,7 +4349,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.threeConsecutiveOdds( [] )
+let r = s.longestUnivaluePath( nil )
 print(r)
 let m = Date().milliStamp - c
 print(m)
