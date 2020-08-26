@@ -31,6 +31,15 @@ public class ListNode {
     }
 }
 
+public class Node {
+    public var val: Int
+    public var children: [Node]
+    public init(_ val: Int) {
+        self.val = val
+        self.children = []
+    }
+}
+
 class Solution {
     
     var head: ListNode?
@@ -4318,6 +4327,33 @@ class Solution {
         ans = max(ans, arrowLeft + arrowRight)
         return max(arrowLeft, arrowRight)
     }
+ 
+    ///429. N叉树的层序遍历
+    func levelOrder_IV(_ root: Node?) -> [[Int]] {
+        if root == nil {
+            return []
+        }
+        var res = [[Int]]()
+        var q = Array<Node>()
+        q.append(root!)
+        var size = q.count
+        var temp = [Int]()
+        while !q.isEmpty {
+            let first = q.removeFirst()
+            size -= 1
+            temp.append(first.val)
+            if first.children.count > 0 {
+                q.append(contentsOf: first.children)
+            }
+            if size == 0 {
+                size = q.count
+                res.append(temp)
+                temp.removeAll()
+            }
+        }
+        return res
+    }
+    
 }
 
 // 1 2  2 1
@@ -4349,7 +4385,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.longestUnivaluePath( nil )
+let r = s.levelOrder_IV( nil )
 print(r)
 let m = Date().milliStamp - c
 print(m)
