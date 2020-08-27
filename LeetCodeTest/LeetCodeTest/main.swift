@@ -4354,6 +4354,16 @@ class Solution {
         return res
     }
     
+    ///453. 最小移动次数使数组元素相等
+    func minMoves(_ nums: [Int]) -> Int {
+        let array = nums.sorted()
+        var count = 0
+        for i in (0..<array.count).reversed() {
+            count += nums[i] - array[0]
+        }
+        return count
+    }
+    
 }
 
 // 1 2  2 1
@@ -4385,7 +4395,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.levelOrder_IV( nil )
+let r = s.minMoves( [83,86,77,15,93,35,86,92,49,21] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
