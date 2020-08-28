@@ -4364,6 +4364,20 @@ class Solution {
         return count
     }
     
+    ///657. 机器人能否返回原点
+    func judgeCircle(_ moves: String) -> Bool {
+        var p = (0, 0)
+        for c in moves {
+            switch c {
+            case "R": p.0 += 1
+            case "L": p.0 -= 1
+            case "U": p.1 -= 1
+            case "D": p.1 += 1
+            default: break
+            }
+        }
+        return (p.0 == 0 && p.1 == 0)
+    }
 }
 
 // 1 2  2 1
@@ -4395,7 +4409,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.minMoves( [83,86,77,15,93,35,86,92,49,21] )
+let r = s.judgeCircle( "UD" )
 print(r)
 let m = Date().milliStamp - c
 print(m)
