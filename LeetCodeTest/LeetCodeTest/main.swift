@@ -4378,6 +4378,34 @@ class Solution {
         }
         return (p.0 == 0 && p.1 == 0)
     }
+ 
+    //257. 二叉树的所有路径
+    var path = [String]()
+    var set  = Set<String>()
+    func binaryTreePaths(_ root: TreeNode?) -> [String] {
+        if root == nil {
+            return []
+        }
+        binaryTreePaths_digui(root)
+        return Array(set)
+    }
+    func binaryTreePaths_digui(_ root: TreeNode?) {
+        if root == nil {
+            return
+        }
+        let val = root!.val
+        path.append("\(val)")
+        binaryTreePaths_digui(root?.left)
+        binaryTreePaths_digui(root?.right)
+        if path.count > 0 {
+            if  root?.left == nil && root?.right == nil  {
+                set.insert(path.joined(separator: "->"))
+            }
+            path.removeLast()
+        }
+    }
+
+    
 }
 
 // 1 2  2 1
@@ -4409,7 +4437,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.judgeCircle( "UD" )
+let r = s.binaryTreePaths( nil )
 print(r)
 let m = Date().milliStamp - c
 print(m)
