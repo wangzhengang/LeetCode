@@ -44,7 +44,7 @@ class Solution {
     
     var head: ListNode?
     var tail: ListNode?
-    
+
     ///为链表添加一个节点
     func addNodel(_ value: Int) {
         let newNodel = ListNode(value)
@@ -4404,7 +4404,15 @@ class Solution {
             path.removeLast()
         }
     }
-
+ 
+    ///347. 前 K 个高频元素
+    func topKFrequent(_ nums: [Int], _ k: Int) -> [Int] {
+        let array = nums.map { ($0, 1) }
+        let map = Dictionary(array, uniquingKeysWith: +)
+        let sort = map.sorted { $0.value > $1.value }
+        let result = sort.map { $0.key }.prefix(k)
+        return Array( result )
+    }
     
 }
 
@@ -4437,7 +4445,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.binaryTreePaths( nil )
+let r = s.topKFrequent( [0], 0 )
 print(r)
 let m = Date().milliStamp - c
 print(m)
