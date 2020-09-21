@@ -4414,6 +4414,18 @@ class Solution {
         return Array( result )
     }
     
+    //538. 把二叉搜索树转换为累加树
+    var bstSum = 0
+    func convertBST(_ root: TreeNode?) -> TreeNode? {
+        if root != nil {
+            convertBST(root?.right)
+            bstSum += root!.val
+            root?.val = bstSum
+            convertBST(root?.left)
+        }
+        return root
+    }
+    
 }
 
 // 1 2  2 1
@@ -4445,7 +4457,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.topKFrequent( [0], 0 )
+let r = s.convertBST( nil )
 print(r)
 let m = Date().milliStamp - c
 print(m)
