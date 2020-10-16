@@ -4425,7 +4425,59 @@ class Solution {
         }
         return root
     }
+
+    ///977. 有序数组的平方
+    func sortedSquares(_ A: [Int]) -> [Int] {
+        
+        var r = Array(repeating: 0, count: A.count)
+        var i = 0, j = A.count - 1, p = A.count - 1
+        while i <= j {
+            if A[i] * A[i] > A[j] * A[j] {
+                r[p] = A[i] * A[i]
+                i += 1
+            } else {
+                r[p] = A[j] * A[j]
+                j -= 1
+            }
+            p -= 1
+        }
+        return r
+    }
     
+    ///24. 两两交换链表中的节点
+    func swapPairs_II(_ head: ListNode?) -> ListNode? {
+        guard head != nil else {
+            return nil
+        }
+        
+        var r: ListNode?
+        var h: ListNode?
+        var p = head
+        var l = head?.next
+        if l == nil {
+            return head
+        }
+        while p != nil {
+            
+            p?.next = l?.next
+            l?.next = p
+            
+            if h != nil {
+                h?.next = l
+            } else {
+                h = l
+            }
+            
+            if r == nil {
+                r = h
+            }
+            
+            h = p
+            p = p?.next
+            l = p?.next
+        }
+        return r
+    }
 }
 
 // 1 2  2 1
@@ -4433,11 +4485,12 @@ class Solution {
 let s = Solution()
 
 let s1 = Solution()
-//s1.addNodel(1)
-//s1.addNodel(1)
+s1.addNodel(1)
 //s1.addNodel(2)
-//s1.addNodel(1)
+//s1.addNodel(3)
+//s1.addNodel(4)
 //s1.addNodel(5)
+//s1.addNodel(6)
 
 let s2 = Solution()
 //s2.addNodel(1)
@@ -4457,7 +4510,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.convertBST( nil )
+let r = s.sortedSquares( [] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
