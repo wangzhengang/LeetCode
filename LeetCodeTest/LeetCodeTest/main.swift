@@ -4478,6 +4478,27 @@ class Solution {
         }
         return r
     }
+    
+    ///844. 比较含退格的字符串
+    func backspaceCompare(_ S: String, _ T: String) -> Bool {
+        return backspaceCompareDelete(S) == backspaceCompareDelete(T)
+    }
+    func backspaceCompareDelete(_ str: String) -> String {
+        //栈
+        var array = Array<Character>()
+        for c in Array(str)  {
+            if c == "#" {
+                if !array.isEmpty {
+                    array.removeLast()
+                }
+            } else {
+                array.append(c)
+            }
+        }
+        return String(array)
+    }
+    
+    
 }
 
 // 1 2  2 1
@@ -4485,7 +4506,7 @@ class Solution {
 let s = Solution()
 
 let s1 = Solution()
-s1.addNodel(1)
+//s1.addNodel(1)
 //s1.addNodel(2)
 //s1.addNodel(3)
 //s1.addNodel(4)
@@ -4510,7 +4531,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.sortedSquares( [] )
+let r = s.backspaceCompare( "##", "#" )
 print(r)
 let m = Date().milliStamp - c
 print(m)
