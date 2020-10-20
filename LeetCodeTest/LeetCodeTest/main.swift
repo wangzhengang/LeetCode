@@ -4498,6 +4498,31 @@ class Solution {
         return String(array)
     }
     
+    ///143. 重排链表
+    func reorderList(_ head: ListNode?) {
+        guard head != nil else {
+            return
+        }
+        var list = [ListNode]()
+        var h = head
+        while h != nil {
+            list.append(ListNode(h!.val))
+            h = h?.next
+        }
+        var new = head
+        var i = 1, j = list.count - 1
+        while i < j {
+            new?.next = list[j]
+            new = new?.next
+            new?.next = list[i]
+            new = new?.next
+            i += 1
+            j -= 1
+        }
+        if i == j {
+            new?.next = list[i]
+        }
+    }
     
 }
 
@@ -4506,12 +4531,12 @@ class Solution {
 let s = Solution()
 
 let s1 = Solution()
-//s1.addNodel(1)
-//s1.addNodel(2)
-//s1.addNodel(3)
-//s1.addNodel(4)
-//s1.addNodel(5)
-//s1.addNodel(6)
+s1.addNodel(1)
+s1.addNodel(2)
+s1.addNodel(3)
+s1.addNodel(4)
+s1.addNodel(5)
+s1.addNodel(6)
 
 let s2 = Solution()
 //s2.addNodel(1)
@@ -4531,7 +4556,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.backspaceCompare( "##", "#" )
+let r = s.reorderList( s1.head )
 print(r)
 let m = Date().milliStamp - c
 print(m)
