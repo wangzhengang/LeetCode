@@ -4523,6 +4523,76 @@ class Solution {
             new?.next = list[i]
         }
     }
+ 
+    ///925. 长按键入   "saeed", "ssaaedd"    "leelee", "lleeelee"
+    func isLongPressedName(_ name: String, _ typed: String) -> Bool {
+        
+        let nameArray  = self.isLongPressedName_transform(name)
+        let typedArray = self.isLongPressedName_transform(typed)
+        if nameArray.count != typedArray.count {
+            return false
+        }
+        var i = 0, j = 0
+        while i < nameArray.count && j < typedArray.count {
+            let n = nameArray[i]
+            let t = typedArray[j]
+            if n.0 != t.0 || n.1 > t.1 {
+                return false
+            }
+            i += 1
+            j += 1
+        }
+        return true
+    }
+    func isLongPressedName_transform(_ str: String) -> [(Character, Int)] {
+        guard !str.isEmpty else {
+            return []
+        }
+        let a = Array(str)
+        var r = [(Character, Int)]()
+        r.append((a[0], 1))
+        var i = 1
+        while i < a.count {
+            if a[i] == a[i - 1] {
+                let l = r.removeLast()
+                r.append( (l.0, l.1 + 1) )
+            } else {
+                r.append( (a[i], 1) )
+            }
+            i += 1
+        }
+        return r
+    }
+    
+    ///234. 回文链表  四刷
+    func isPalindrome_4(_ head: ListNode?) -> Bool {
+        var n: ListNode?
+        var h = head
+        while h != nil {
+            if n == nil {
+                n = ListNode(h!.val)
+            } else {
+                let t = ListNode(h!.val)
+                t.next = n
+                n = t
+            }
+            h = h?.next
+        }
+        h = head
+        while h != nil && n != nil {
+            if h!.val != n!.val {
+                return false
+            }
+            h = h?.next
+            n = n?.next
+        }
+        if h != nil || n != nil {
+            return false
+        }
+        return true
+    }
+    
+    
     
 }
 
@@ -4533,10 +4603,10 @@ let s = Solution()
 let s1 = Solution()
 s1.addNodel(1)
 s1.addNodel(2)
-s1.addNodel(3)
-s1.addNodel(4)
-s1.addNodel(5)
-s1.addNodel(6)
+s1.addNodel(2)
+s1.addNodel(1)
+//s1.addNodel(5)
+//s1.addNodel(6)
 
 let s2 = Solution()
 //s2.addNodel(1)
@@ -4556,7 +4626,7 @@ for i in 1...10000 {
 }
  
 let c = Date().milliStamp
-let r = s.reorderList( s1.head )
+let r = s.isPalindrome_4( s1.head )
 print(r)
 let m = Date().milliStamp - c
 print(m)
