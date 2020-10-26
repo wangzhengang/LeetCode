@@ -4593,6 +4593,52 @@ class Solution {
     }
     
     
+    ///1365. 有多少小于当前数字的数字
+    func smallerNumbersThanCurrent(_ nums: [Int]) -> [Int] {
+        
+        var result = [Int]()
+        //方法一
+//        for i in 0..<nums.count {
+//            var count = 0
+//            for j in 0..<nums.count {
+//                if i != j, nums[j] < nums[i] {
+//                    count += 1
+//                }
+//            }
+//            result.append(count)
+//        }
+        //方法二
+//        var y = [(Int, Int)]()
+//        for i in 0..<nums.count {
+//            y.append( (nums[i], i) )
+//        }
+//        result = Array(repeating: 0, count: y.count)
+//        let s = y.sorted { $0.0 < $1.0 }
+//        for i in 0..<s.count {
+//            if i > 0 {
+//                if s[i].0 != s[i - 1].0 {
+//                    result[s[i].1] = i
+//                } else {
+//                    result[s[i].1] =  result[s[i - 1].1]
+//                }
+//            } else {
+//                result[s[i].1] = i
+//            }
+//        }
+        //方法三
+        var cnt = Array(repeating: 0, count: 101)
+        for n in nums {
+            cnt[n] += 1
+        }
+        for i in 1..<cnt.count {
+            cnt[i] += cnt[i - 1]
+        }
+        for i in 0..<nums.count {
+            result.append( ( nums[i] == 0 ? 0 : cnt[ nums[i] - 1 ] ) )
+        }
+        return result
+    }
+    
     
 }
 
@@ -4601,10 +4647,10 @@ class Solution {
 let s = Solution()
 
 let s1 = Solution()
-s1.addNodel(1)
-s1.addNodel(2)
-s1.addNodel(2)
-s1.addNodel(1)
+//s1.addNodel(1)
+//s1.addNodel(2)
+//s1.addNodel(2)
+//s1.addNodel(1)
 //s1.addNodel(5)
 //s1.addNodel(6)
 
@@ -4621,12 +4667,14 @@ s2.head?.next?.next?.next = s2.head
 //s.deleteNode( ListNode(5) )  2147483648
 var nums1 = [Int]()
 //var nums2 = [[Int]]()
-for i in 1...10000 {
-    nums1.append(i)
+for _ in 1...5 {
+    for i in 0...100 {
+        nums1.append(i)
+    }
 }
  
 let c = Date().milliStamp
-let r = s.isPalindrome_4( s1.head )
+let r = s.smallerNumbersThanCurrent( [37,64,63,2,41,78,51,36,2,20,25,41,72,100,17,43,54,27,34,86,12,48,70,44,87,68,62,98,68,30,8,92,5,10] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
