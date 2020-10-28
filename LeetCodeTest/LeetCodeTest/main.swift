@@ -4592,7 +4592,6 @@ class Solution {
         return true
     }
     
-    
     ///1365. 有多少小于当前数字的数字
     func smallerNumbersThanCurrent(_ nums: [Int]) -> [Int] {
         
@@ -4639,6 +4638,44 @@ class Solution {
         return result
     }
     
+    ///144. 二叉树的前序遍历
+    func preorderTraversal(_ root: TreeNode?) -> [Int] {
+        guard root != nil else {
+            return []
+        }
+        var result = [Int]()
+        self.preorderTraversal_digui(root, &result)
+        return result
+    }
+    func preorderTraversal_digui(_ root: TreeNode?, _ result: inout [Int]) {
+        if root == nil {
+            return
+        }
+        result.append(root!.val)
+        self.preorderTraversal_digui(root?.left, &result)
+        self.preorderTraversal_digui(root?.right, &result)
+    }
+    
+    ///1207. 独一无二的出现次数
+    func uniqueOccurrences(_ arr: [Int]) -> Bool {
+        var count = [Int: Int]()
+        for n in arr {
+            if let c = count[n] {
+                count[n] = c + 1
+            } else {
+                count[n] = 1
+            }
+        }
+        var map = [Int: Int]()
+        for c in count {
+            if let _ = map[c.value] {
+                return false
+            } else {
+                map[c.value] = c.key
+            }
+        }
+        return true
+    }
     
 }
 
@@ -4674,7 +4711,7 @@ for _ in 1...5 {
 }
  
 let c = Date().milliStamp
-let r = s.smallerNumbersThanCurrent( [37,64,63,2,41,78,51,36,2,20,25,41,72,100,17,43,54,27,34,86,12,48,70,44,87,68,62,98,68,30,8,92,5,10] )
+let r = s.uniqueOccurrences( [] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
