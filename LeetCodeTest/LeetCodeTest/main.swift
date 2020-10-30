@@ -4677,6 +4677,45 @@ class Solution {
         return true
     }
     
+    ///129. 求根到叶子节点数字之和
+    func sumNumbers(_ root: TreeNode?) -> Int {
+        return sumNumbers_digui(root, 0)
+    }
+    func sumNumbers_digui(_ root: TreeNode?, _ preNum: Int) -> Int {
+        guard root != nil else {
+            return 0
+        }
+        let sum = preNum * 10 + root!.val
+        if root?.left == nil && root?.right == nil {
+            return sum
+        }
+        return sumNumbers_digui(root?.left, sum) + sumNumbers_digui(root?.right, sum)
+    }
+    
+    ///463. 岛屿的周长
+    func islandPerimeter(_ grid: [[Int]]) -> Int {
+        var i = 0, j = 0, count = 0
+        while i < grid.count {
+            let array = grid[i]
+            j = 0
+            while j < array.count {
+                let v = array[j]
+                if v == 1 {
+                    count += 4
+                    if i > 0 && grid[i - 1][j] == 1 {
+                        count -= 2
+                    }
+                    if j > 0 && grid[i][j - 1] == 1 {
+                        count -= 2
+                    }
+                }
+                j += 1
+            }
+            i += 1
+        }
+        return count
+    }
+    
 }
 
 // 1 2  2 1
@@ -4704,21 +4743,16 @@ s2.head?.next?.next?.next = s2.head
 //s.deleteNode( ListNode(5) )  2147483648
 var nums1 = [Int]()
 //var nums2 = [[Int]]()
-for _ in 1...5 {
-    for i in 0...100 {
-        nums1.append(i)
-    }
-}
+//for _ in 1...5 {
+//    for i in 0...100 {
+//        nums1.append(i)
+//    }
+//}
  
 let c = Date().milliStamp
-let r = s.uniqueOccurrences( [] )
+let r = s.islandPerimeter( [[0,1,0,0], [1,1,1,0], [0,1,0,0], [1,1,0,0]] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
-
-
-
-
-
 
 
