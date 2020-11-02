@@ -4716,6 +4716,25 @@ class Solution {
         return count
     }
     
+    ///349. 两个数组的交集
+    func intersection_3(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+        return Array( Set(nums1).intersection( Set(nums2) ) )
+    }
+    
+    ///744. 寻找比目标字母大的最小字母
+    func nextGreatestLetter(_ letters: [Character], _ target: Character) -> Character {
+        if letters.last! <= target {
+            return letters.first!
+        }
+        for c in letters {
+            if c > target {
+                return c
+            }
+        }
+        return letters.first!
+   }
+    
+    
 }
 
 // 1 2  2 1
