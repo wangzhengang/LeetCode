@@ -4734,6 +4734,53 @@ class Solution {
         return letters.first!
    }
     
+    ///941. 有效的山脉数组
+    func validMountainArray(_ A: [Int]) -> Bool {
+        guard A.count >= 3 else {
+            return false
+        }
+        var increase = false, decrease = false
+        for i in 1..<A.count {
+            if A[i] > A[i - 1] && decrease == false {
+                increase = true
+            } else if A[i] < A[i - 1] && increase == true {
+                decrease = true
+            } else {
+                return false
+            }
+        }
+        return ( increase && decrease )
+    }
+    
+    ///86. 分隔链表
+    func partition(_ head: ListNode?, _ x: Int) -> ListNode? {
+        var less: ListNode?, greater: ListNode?
+        var h = head, l = less, g = greater
+        while h != nil {
+            if h!.val < x {
+                if less == nil {
+                    less = ListNode(h!.val)
+                    l = less
+                } else {
+                    let t = ListNode(h!.val)
+                    l?.next = t
+                    l = l?.next
+                }
+            } else {
+                if greater == nil {
+                    greater = ListNode(h!.val)
+                    g = greater
+                } else {
+                    let t = ListNode(h!.val)
+                    g?.next = t
+                    g = g?.next
+                }
+            }
+            h = h?.next
+        }
+        l?.next = greater
+        return ( l != nil ? less : greater)
+    }
     
 }
 
@@ -4769,7 +4816,7 @@ var nums1 = [Int]()
 //}
  
 let c = Date().milliStamp
-let r = s.islandPerimeter( [[0,1,0,0], [1,1,1,0], [0,1,0,0], [1,1,0,0]] )
+let r = s.validMountainArray( [] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
