@@ -4782,6 +4782,28 @@ class Solution {
         return ( l != nil ? less : greater)
     }
     
+    ///203. 移除链表元素
+    func removeElements(_ head: ListNode?, _ val: Int) -> ListNode? {
+        var new: ListNode?
+        var h = head, n = new
+        while h != nil {
+            if h!.val == val {
+                n?.next = nil
+            } else {
+                if new == nil {
+                    new = h
+                    n = h
+                }  else {
+                    n?.next = h
+                    n = h
+                }
+            }
+            h = h?.next
+        }
+        return new
+    }
+    
+    
 }
 
 // 1 2  2 1
@@ -4789,12 +4811,13 @@ class Solution {
 let s = Solution()
 
 let s1 = Solution()
-//s1.addNodel(1)
-//s1.addNodel(2)
-//s1.addNodel(2)
-//s1.addNodel(1)
-//s1.addNodel(5)
-//s1.addNodel(6)
+s1.addNodel(1)
+s1.addNodel(2)
+s1.addNodel(6)
+s1.addNodel(3)
+s1.addNodel(4)
+s1.addNodel(5)
+s1.addNodel(6)
 
 let s2 = Solution()
 //s2.addNodel(1)
@@ -4816,7 +4839,7 @@ var nums1 = [Int]()
 //}
  
 let c = Date().milliStamp
-let r = s.validMountainArray( [] )
+let r = s.removeElements( s1.head, 6 )
 print(r)
 let m = Date().milliStamp - c
 print(m)
