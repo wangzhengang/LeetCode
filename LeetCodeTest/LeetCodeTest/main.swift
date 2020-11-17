@@ -56,7 +56,7 @@ class Solution {
             tail = newNodel
         }
     }
-    
+
     ///删除第N个链表节点
     func deleteNode(_ node: ListNode?) {
         if let n = node?.next {
@@ -4802,7 +4802,66 @@ class Solution {
         }
         return new
     }
+ 
+    ///92. 反转链表 II
+    func reverseBetween(_ head: ListNode?, _ m: Int, _ n: Int) -> ListNode? {
+        guard head != nil || m != n  else {
+            return head
+        }
+        var m = m , n = n, head = head
+        var cur = head, prev = head
+        while (m > 1) {
+            prev = cur
+            cur = cur?.next
+            m -= 1
+            n -= 1
+        }
+
+        let con = prev, tail = cur
+
+        var third: ListNode?
+        while (n > 0) {
+            third = cur?.next
+            cur?.next = prev
+            prev = cur
+            cur = third
+            n -= 1
+        }
+
+        if (con != nil) {
+            con?.next = prev
+        } else {
+            head = prev
+        }
+
+        tail?.next = cur
+        return head
+    }
     
+    ///1356. 根据数字二进制下 1 的数目排序
+    func sortByBits(_ arr: [Int]) -> [Int] {
+        var countArray = [(Int, Int)]()
+        for n in arr  {
+            var sum = 0
+            for c in String(n, radix: 2 ) {
+                if c == "1" {
+                    sum += 1
+                }
+            }
+            countArray.append((n, sum))
+        }
+        countArray.sort { (a, b) -> Bool in
+            if a.1 == b.1 {
+                return a.0 < b.0
+            }
+            return a.1 < b.1
+        }
+        var result = [Int]()
+        for n in countArray {
+            result.append(n.0)
+        }
+        return result
+    }
     
 }
 
@@ -4811,13 +4870,11 @@ class Solution {
 let s = Solution()
 
 let s1 = Solution()
-s1.addNodel(1)
-s1.addNodel(2)
-s1.addNodel(6)
 s1.addNodel(3)
-s1.addNodel(4)
 s1.addNodel(5)
-s1.addNodel(6)
+//s1.addNodel(3)
+//s1.addNodel(4)
+//s1.addNodel(5)
 
 let s2 = Solution()
 //s2.addNodel(1)
@@ -4839,7 +4896,7 @@ var nums1 = [Int]()
 //}
  
 let c = Date().milliStamp
-let r = s.removeElements( s1.head, 6 )
+let r = s.sortByBits( [1024,512,256,128,64,32,16,8,4,2,1] )
 print(r)
 let m = Date().milliStamp - c
 print(m)
